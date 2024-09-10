@@ -1,7 +1,7 @@
-import { View,  StyleSheet, Button } from 'react-native';
+import { View,  StyleSheet, Button, SafeAreaView, TouchableOpacity, Text, } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import img from '../Assetes/ff.jpg'
 
 const Home = ({ navigation }) => {
   const [open, setOpen] = useState(false);
@@ -48,10 +48,9 @@ const Home = ({ navigation }) => {
     { id: 20, name: 'Harry Kane', age: 37 },
   ];
 
-  // Function to handle value change
-  const handleValueChange = (team) => {
-    console.log('Selected value:', team);
-    let palerList = [];
+
+ const handelSubmit = (team)=>{
+  let palerList = [];
      if(team === 'argentina')
      {
         palerList = argentinas;
@@ -66,17 +65,11 @@ const Home = ({ navigation }) => {
       palerList = englands;
      }
      navigation.navigate('Player' , {team , palerList});
-};
+ }
 
-
-  useEffect(() => {
-    if (value) {
-      handleValueChange(value);
-    }
-  },[value] );
 
   return (
-    <View style={styles.continer} >
+    <SafeAreaView style={styles.continer} >
       <DropDownPicker
         open={open}
         value={value}
@@ -87,45 +80,43 @@ const Home = ({ navigation }) => {
         style={styles.dropDown}
         placeholder="Select Your Favorite Team"
       />
-    </View>
+       <TouchableOpacity
+        onPress={() => handelSubmit(value)}
+        style={styles.btn}
+      >
+        <Text style={styles.btnText}>Submit</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+
   );
 };
 
 const styles = StyleSheet.create({
    dropDown :{
     width:380,
-     marginTop:15,
-     marginBottom:140,
-     marginLeft:15,
-     marginRight:15,
      backgroundColor: 'orange',
      color: 'white',
      fontWeight: 'bold',
+     margin:'auto',
+     marginBottom:40,
    },
    continer :{
-     marginBottom :500,
+     flex:1,
+     backgroundColor:'white',
+     alignItems:'center',
+     justifyContent:'center'
    },
-   text:{
-       backgroundColor:'skyblue',
-       fontSize:20,
-       padding:10,
-       margin:5,
-       textAlign:'center',
-       color:'black',
-       borderRadius:8,
-   },
-   heading:{
-       color: 'black',
-       fontSize:25,
-       textAlign:'center',
-   },
-   selecttam:{
-    color: 'black',
-    fontSize:25,
+   btn:{
+    padding:10,
+    backgroundColor: 'green',
+    borderRadius:8,
+   }, 
+    btnText: {
+    color: 'white',
+    fontWeight: 'bold',
     textAlign:'center',
-     textTransform: 'uppercase',
-   },
-
+  }
+ 
 });
 
 export default Home;
